@@ -50,6 +50,6 @@ De pagina past zich aan mobiel, laptop, portrait en landscape aan. De inhoud mag
 
 ## Hosting en privacy
 
-Upload `index.html`, `css/`, `js/` en `data/` naar een statische host, bijvoorbeeld S3, GitHub Pages of Cloudflare Pages. `scripts/` is alleen voor lokaal gebruik.
+Voor GitHub Pages kies je bij **Settings → Pages → Build and deployment** de bron **Deploy from a branch**, met branch `main` en map `/(root)`. GitHub publiceert dan de bestanden automatisch na iedere push. Ook andere statische hosts kunnen de bestanden `index.html`, `css/`, `js/` en `data/` serveren. `scripts/` is alleen voor lokaal gebruik.
 
 `data/gasten.json` wordt publiek meegestuurd met de website. Zet er geen wachtwoorden, geheime informatie of gegevens in die niet openbaar mogen zijn. Een QR-code is een link, geen toegangsbeveiliging.
