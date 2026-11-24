@@ -103,6 +103,15 @@ h2 {
     border: 0;
 }
 
+.gift-message {
+    margin: 0.65rem 0 0;
+    color: #5b4636;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
 .status {
     margin: 1.25rem 0 0;
     color: #691414;
@@ -341,6 +350,10 @@ body[data-guest] .player {
 body[data-guest] .player iframe {
     min-height: 152px;
     border-radius: 0.75rem;
+}
+
+body[data-guest] .gift-message {
+    color: var(--theme-accent, var(--theme-text, #2b3038));
 }
 
 body[data-guest] .status {
