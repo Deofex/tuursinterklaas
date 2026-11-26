@@ -1,8 +1,26 @@
 const titleElement = document.getElementById('page-title');
+const homeEyebrow = document.getElementById('home-eyebrow');
 const messageElement = document.getElementById('message');
 const statusElement = document.getElementById('status');
+const guestNavigation = document.getElementById('guest-navigation');
+const guestList = document.getElementById('guest-list');
 const musicSection = document.getElementById('music-section');
 const playerElement = document.getElementById('spotify-player');
+const guestOrder = ['ton', 'jose', 'sonja', 'ramon', 'monique', 'arthur', 'brigit', 'tim', 'bob', 'joep', 'eva', 'sophie'];
+const guestPortraits = {
+    ton: 'images/sint-ton.jpg',
+    jose: 'images/hoodpiet-jose.jpg',
+    sonja: 'images/piet-sonja.jpg',
+    monique: 'images/piet-monique.jpg',
+    arthur: 'images/piet-arthur.jpg',
+    ramon: 'images/piet-ramon.jpg',
+    brigit: 'images/piet-brigit.jpg',
+    tim: 'images/piet-tim.jpg',
+    bob: 'images/piet-bob.jpg',
+    joep: 'images/piet-joep.jpg',
+    eva: 'images/piet-eva.jpg',
+    sophie: 'images/piet-sophie.jpg'
+};
 
 function showStatus(text) {
     statusElement.textContent = text;
@@ -59,8 +77,9 @@ async function loadPersonalPage() {
     const guestId = new URLSearchParams(window.location.search).get('voor');
 
     if (!guestId) {
-        titleElement.textContent = 'Persoonlijke pagina niet gevonden';
-        return;
+        document.body.dataset.page = 'home';
+        homeEyebrow.hidden = false;
+        titleElement.textContent = 'Kies je naam';
     }
 
     try {
@@ -68,11 +87,49 @@ async function loadPersonalPage() {
         if (!response.ok) throw new Error('Gastenbestand niet beschikbaar');
 
         const guests = await response.json();
+
+        if (!guestId) {
+            document.title = 'Kies je naam | Pakjesavond';
+            if (guests.length === 0) {
+                showStatus('Er zijn nog geen gasten toegevoegd.');
+                return;
+            }
+
+            const orderedGuests = [
+                ...guestOrder.map((id) => guests.find((guest) => guest.id === id)).filter(Boolean),
+                ...guests.filter((guest) => !guestOrder.includes(guest.id))
+            ];
+
+            for (const guest of orderedGuests) {
+                const listItem = document.createElement('li');
+                const link = document.createElement('a');
+                link.href = `?voor=${encodeURIComponent(guest.id)}`;
+
+                if (guestPortraits[guest.id]) {
+                    const portrait = document.createElement('img');
+                    portrait.src = guestPortraits[guest.id];
+                    portrait.alt = '';
+                    portrait.loading = 'lazy';
+                    portrait.decoding = 'async';
+                    link.append(portrait);
+                }
+
+                const name = document.createElement('span');
+                name.textContent = guest.name;
+                link.append(name);
+                listItem.append(link);
+                guestList.append(listItem);
+            }
+            guestNavigation.hidden = false;
+            return;
+        }
+
         const guest = guests.find((item) => item.id === guestId.toLowerCase());
 
         if (!guest) {
             titleElement.textContent = 'Pagina niet gevonden';
             messageElement.textContent = 'Controleer de QR-code of vraag de organisator om hulp.';
+            messageElement.hidden = false;
             return;
         }
 
@@ -117,6 +174,7 @@ async function loadPersonalPage() {
     } catch {
         titleElement.textContent = 'Oeps, de pagina kon niet laden';
         messageElement.textContent = 'Probeer het later nog eens of vraag de organisator om hulp.';
+        messageElement.hidden = false;
     }
 }
 

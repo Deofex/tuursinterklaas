@@ -7,13 +7,18 @@
     <meta name="description" content="Een persoonlijke verrassing voor pakjesavond.">
     <title>Een verrassing voor jou</title>
     <link rel="icon" href="favicon.png" type="image/png">
-    <link rel="stylesheet" href="css/styles.css?v=4">
+    <link rel="stylesheet" href="css/styles.css?v=6">
 </head>
 <body>
     <main class="page-shell">
         <article class="card" aria-labelledby="page-title">
+            <p id="home-eyebrow" class="eyebrow" hidden>Sinterklaas met de familie van Bruggen</p>
             <h1 id="page-title"></h1>
             <p id="message" class="message" aria-live="polite" hidden></p>
+
+            <nav id="guest-navigation" aria-label="Persoonlijke pagina's" hidden>
+                <ul id="guest-list" class="guest-list"></ul>
+            </nav>
 
             <section id="music-section" class="music-section" aria-labelledby="music-title" hidden>
                 <h2 id="music-title">Jouw Sinterklaasnummer</h2>
@@ -24,6 +29,6 @@
             <p id="status" class="status" role="status"></p>
         </article>
     </main>
-    <script src="js/app.js" defer></script>
+    <script src="js/app.js?v=4" defer></script>
 </body>
 </html>
